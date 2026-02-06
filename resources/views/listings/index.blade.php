@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Marketplace</title>
-
      {{-- Livewire styles --}}
     @livewireStyles
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -16,7 +15,6 @@
     <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
     <h1>My Listings</h1>
-    
 <form method="GET" action="{{ url('provider/listings') }}"
       class="mb-6 grid grid-cols-1 md:grid-cols-6 gap-4">
 

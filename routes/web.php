@@ -53,10 +53,9 @@ Route::middleware('guest')->group(function () {
 });
 
 // CUSTOMER 
-Route::get('/provider/listings/create', CreateListing::class)
-                ->name('provider.listings.create');
+Route::get('/provider/listings/create', CreateListing::class)->name('provider.listings.create');
 Route::get('/provider/listings', [ListingController::class, 'index'])->name('provider.listings');
-        Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
+Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
 Route::get('/listings/{id}', [EnquiryController::class, 'index'])->name('index');
 
 

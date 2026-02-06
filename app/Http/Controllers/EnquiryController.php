@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enquiry;
+use App\Http\Requests\StoreEnquiryRequest;
 use App\Models\Listings;
-use Illuminate\Http\Request;
+use App\Models\Enquiry;
+use Illuminate\Support\Facades\DB;
 
 class EnquiryController extends Controller
 {   
@@ -15,40 +16,31 @@ class EnquiryController extends Controller
         return view('customer.enquiries.index', compact('listing'));
     }
     // Customer sends enquiry
-    public function store(Request $request)
+   public function store(StoreEnquiryRequest $request)
     {
-        if (!auth()->user()->isCustomer()) {
-            abort(403);
-        }
+        // Use DB transaction for safety
+        DB::transaction(function () use ($request) {
 
+            $listing = Listings::findOrFail($request->listing_id);
 
+            // Prevent customers from messaging themselves
+            if ($listing->user_id === auth()->id()) {
+                abort(403, 'You cannot send an enquiry to your own listing.');
+            }
 
-        $request->validate([
-            'listing_id' => 'required|exists:listings,id',
-            'message' => 'required|string|min:10',
-        ]);
+            Enquiry::create([
+                'listing_id'  => $listing->id,
+                'customer_id' => auth()->id(),
+                'provider_id' => $listing->user_id,
+                'message'     => $request->message,
+                'reply_message' => '',
+                'status'      => 'open',
+            ]);
+        });
 
-        $listing = Listings::findOrFail($request->listing_id);
-       
-        // Prevent provider messaging himself
-        /*if ($listing->user_id === auth()->id()) {
-            abort(403);
-        }*/
-
-        Enquiry::create([
-            'listing_id'  => $listing->id,
-            'customer_id' => auth()->id(),
-            'provider_id' => $listing->user_id,
-            'message'     => $request->message,
-            'reply_message'     =>"",
-            'status'      => 'open',
-        ]);
-
-       // return back()->with('success', 'Enquiry sent');
-
-         return redirect()->route('my-enquiries')
-    ->with('success', 'Enquiry sent');
-
+        return redirect()
+            ->route('my-enquiries')
+            ->with('success', 'Enquiry sent successfully.');
     }
 
     // Customer enquiry list

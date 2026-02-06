@@ -1,9 +1,23 @@
 
-   <div class="min-h-screen flex items-center justify-center bg-gray-100 py-10">
+   <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
     <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-8">
-                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Add New Listing</h2>
 
-                <form action="{{ route('listings.store') }}" method="POST">
+                {{-- Header --}}
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-6">
+            <h1 class="text-2xl font-semibold mb-6 text-gray-800">Create New Listing</h1>
+            <p class="text-blue-100 text-sm mt-1">Fill in the details below to publish your service</p>
+            </div>
+            @if ($errors->any())
+                <div style="color:red; margin-bottom:10px;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+                <form action="{{ route('listings.store') }}" class="p-8 space-y-6" method="POST">
                     @csrf
                     {{-- Title --}}
                     <div class="mb-4">
@@ -75,7 +89,6 @@
                         <select name="status" id="status" 
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                             <option value="">Select Status</option>
-                            <option value="draft">Draft</option>
                             <option value="pending">Pending</option>
                             <option value="approved">Approved</option>
                             <option value="suspended">Suspended</option>

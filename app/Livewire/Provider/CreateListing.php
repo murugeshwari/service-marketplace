@@ -33,7 +33,6 @@ class CreateListing extends Component
                 'price' => $this->price,
                 'status' => 'pending',
             ]);
-
             return redirect()->route('provider.listings');
         }
 

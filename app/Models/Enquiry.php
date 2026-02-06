@@ -22,6 +22,10 @@ class Enquiry extends Model
         'status'
     ];
 
+     protected $casts = [
+        'status' => 'string',
+    ];
+    
     public function listing() {
         return $this->belongsTo(Listings::class);
     }

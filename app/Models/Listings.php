@@ -19,6 +19,14 @@ class Listings extends Model
         'status',
     ];
 
+     protected $casts = [
+        'price' => 'decimal:2',
+    ];
+
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_APPROVED = 'approved';
+    public const STATUS_REJECTED = 'rejected';
+
     public function user()
     {
         return $this->belongsTo(User::class);
