@@ -47,24 +47,18 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-/*Route::get('/', function () {
-    return view('listings.search');
-})->name('home');*/
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin']);
     Route::get('/register', [AuthController::class, 'showRegister']);
 });
 
-// guest
+// CUSTOMER 
 Route::get('/provider/listings/create', CreateListing::class)
                 ->name('provider.listings.create');
 Route::get('/provider/listings', [ListingController::class, 'index'])->name('provider.listings');
         Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
 Route::get('/listings/{id}', [EnquiryController::class, 'index'])->name('index');
 
-/*Route::get('/listings/{listing}', function (Listing $listing) {
-    return view('listings.show', compact('listing'));
-})->name('listings.show');*/
 
 // CUSTOMER
 Route::middleware(['auth', 'role:customer'])->group(function () {
@@ -86,53 +80,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/enquiries', [AdminEnquiryController::class, 'index']);
 });
 
-
-/*Route::get('/listings/{listing}', function (Listing $listing) {
-    return view('listings.show', compact('listing'));
-})->name('listings.show');*/
-
-/*
-|--------------------------------------------------------------------------
-| Authenticated
-|--------------------------------------------------------------------------
-*/
-
-/*Route::middleware(['auth', 'role:customer'])->group(function () {
-
-        Route::get('/provider/listings/create', CreateListing::class)
-                ->name('provider.listings.create');
-
-        Route::get('/provider/listings', [ListingController::class, 'index'])->name('provider.listings');
-
-        Route::post('/enquiries', [EnquiryController::class, 'store']);
-
-
-
-
-
-});*/
-
-
-    /*
-    | Provider
-    */
-/*
-    Route::get('/provider/enquiries', function () {
-        return view('provider.enquiries');
-    })->name('provider.enquiries');*/
-
-    /*
-    | Customer
-    *//*
-    Route::get('/customer/enquiries', function () {
-        return view('customer.enquiries');
-    })->name('customer.enquiries');*/
-
-    /*
-    | Admin
-    */
-   /* Route::get('/admin/listings/pending', function () {
-        return view('admin.listings.pending');
-    })->name('admin.listings.pending');*/
 
 require __DIR__.'/auth.php';
