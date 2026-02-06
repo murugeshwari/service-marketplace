@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Marketplace</title>
-
      {{-- Livewire styles --}}
     @livewireStyles
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">

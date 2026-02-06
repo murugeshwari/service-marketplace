@@ -57,17 +57,4 @@ class EnquiryController extends Controller
     }
 
 
-    /*public function customerIndex()
-    {
-        if (!auth()->user()->isCustomer()) {
-            abort(403);
-        }
-
-        $enquiries = Enquiry::with('listing')
-            ->where('customer_id', auth()->id())
-            ->latest()
-            ->get();
-
-        return view('customer.enquiries.show', compact('enquiries'));
-    }*/
 }
