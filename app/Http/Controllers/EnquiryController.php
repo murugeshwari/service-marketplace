@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class EnquiryController extends Controller
 {   
-
      public function index($id)
     {
         $listing = Listings::findOrFail($id);
@@ -23,11 +22,6 @@ class EnquiryController extends Controller
 
             $listing = Listings::findOrFail($request->listing_id);
 
-            // Prevent customers from messaging themselves
-            if ($listing->user_id === auth()->id()) {
-                abort(403, 'You cannot send an enquiry to your own listing.');
-            }
-
             Enquiry::create([
                 'listing_id'  => $listing->id,
                 'customer_id' => auth()->id(),
@@ -37,7 +31,6 @@ class EnquiryController extends Controller
                 'status'      => 'open',
             ]);
         });
-
         return redirect()
             ->route('my-enquiries')
             ->with('success', 'Enquiry sent successfully.');
